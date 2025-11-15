@@ -20,6 +20,31 @@
       <Field name="phone" type="tel" class="form-control" v-model="contactLocal.phone" />
       <ErrorMessage name="phone" class="error-feedback" />
     </div>
+    <div class="form-group">
+      <label for="hobbies">Sở thích</label>
+      <Field name="hobbies" as="textarea" rows="3" class="form-control" v-model="contactLocal.hobbies" />
+      <ErrorMessage name="hobbies" class="error-feedback" />
+    </div>
+    <div class="form-group">
+      <label for="maritalStatus">Tình trạng hôn nhân</label>
+      <Field name="maritalStatus" as="select" class="form-control" v-model="contactLocal.maritalStatus">
+        <option value="">-- Chọn --</option>
+        <option value="single">Độc thân</option>
+        <option value="married">Kết hôn</option>
+        <option value="divorced">Ly hôn</option>
+      </Field>
+      <ErrorMessage name="maritalStatus" class="error-feedback" />
+    </div>
+    <div class="form-group">
+      <label for="gender">Giới tính</label>
+      <Field name="gender" as="select" class="form-control" v-model="contactLocal.gender">
+        <option value="">-- Chọn --</option>
+        <option value="male">Nam</option>
+        <option value="female">Nữ</option>
+        <option value="other">Khác</option>
+      </Field>
+      <ErrorMessage name="gender" class="error-feedback" />
+    </div>
     <div class="form-group form-check">
       <input name="favorite" type="checkbox" class="form-check-input" v-model="contactLocal.favorite" />
       <label for="favorite" class="form-check-label">
@@ -61,6 +86,9 @@ export default {
       phone: yup
         .string()
         .matches(/((09|03|07|08|05)+([0-9]{8})\b)/g, "Số điện thoại không hợp lệ."),
+      hobbies: yup.string().max(200, "Sở thích tối đa 200 ký tự.").optional(),
+      maritalStatus: yup.string().oneOf(["single", "married", "divorced", ""], "Giá trị không hợp lệ").optional(),
+      gender: yup.string().oneOf(["male", "female", "other", ""], "Giá trị không hợp lệ").optional(),
     });
     return {
       // Chúng ta sẽ không muốn hiệu chỉnh props, nên tạo biến cục bộ
